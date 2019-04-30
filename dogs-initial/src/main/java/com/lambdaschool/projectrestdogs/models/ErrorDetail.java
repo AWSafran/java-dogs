@@ -1,8 +1,12 @@
 package com.lambdaschool.projectrestdogs.models;
 
+import com.lambdaschool.projectrestdogs.exception.ValidationError;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ErrorDetail
 {
