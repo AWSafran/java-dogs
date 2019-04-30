@@ -1,5 +1,7 @@
-package com.lambdaschool.projectrestdogs;
+package com.lambdaschool.projectrestdogs.controller;
 
+import com.lambdaschool.projectrestdogs.models.Dog;
+import com.lambdaschool.projectrestdogs.ProjectrestdogsApplication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,14 +16,14 @@ import java.util.ArrayList;
 public class DogController
 {
     // localhost:8080/dogs/dogs
-    @GetMapping(value = "/dogs")
+    @GetMapping(value = "/dogs", produces = {"application/json"})
     public ResponseEntity<?> getAllDogs()
     {
         return new ResponseEntity<>(ProjectrestdogsApplication.ourDogList.dogList, HttpStatus.OK);
     }
 
     // localhost:8080/dogs/{id}
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/{id}", produces = {"application/json"})
     public ResponseEntity<?> getDogDetail(@PathVariable long id)
     {
         Dog rtnDog = ProjectrestdogsApplication.ourDogList.findDog(d -> (d.getId() == id));
@@ -29,7 +31,7 @@ public class DogController
     }
 
     // localhost:8080/dogs/breeds/{breed}
-    @GetMapping(value = "/breeds/{breed}")
+    @GetMapping(value = "/breeds/{breed}", produces = {"application/json"})
     public ResponseEntity<?> getDogBreeds (@PathVariable String breed)
     {
         ArrayList<Dog> rtnDogs = ProjectrestdogsApplication.ourDogList.
