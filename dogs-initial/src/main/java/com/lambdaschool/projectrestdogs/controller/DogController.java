@@ -44,6 +44,12 @@ public class DogController
     {
         ArrayList<Dog> rtnDogs = ProjectrestdogsApplication.ourDogList.
                 findDogs(d -> d.getBreed().toUpperCase().equals(breed.toUpperCase()));
-        return new ResponseEntity<>(rtnDogs, HttpStatus.OK);
+        if(rtnDogs.size() == 0)
+        {
+            throw new ResourceNotFoundException("Dog with breed " + breed + " not found");
+        } else
+        {
+            return new ResponseEntity<>(rtnDogs, HttpStatus.OK);
+        }
     }
 }
