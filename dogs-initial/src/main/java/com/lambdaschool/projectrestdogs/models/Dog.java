@@ -1,9 +1,13 @@
 package com.lambdaschool.projectrestdogs.models;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.concurrent.atomic.AtomicLong;
 
 public class Dog
 {
+    private static final Logger logger = LoggerFactory.getLogger(Dog.class);
     private static final AtomicLong counter = new AtomicLong();
     private long id;
     private String breed;

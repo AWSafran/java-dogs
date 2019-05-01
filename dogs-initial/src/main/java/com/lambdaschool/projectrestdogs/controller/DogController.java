@@ -3,6 +3,8 @@ package com.lambdaschool.projectrestdogs.controller;
 import com.lambdaschool.projectrestdogs.exception.ResourceNotFoundException;
 import com.lambdaschool.projectrestdogs.models.Dog;
 import com.lambdaschool.projectrestdogs.ProjectrestdogsApplication;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +18,13 @@ import java.util.ArrayList;
 @RequestMapping("/dogs")
 public class DogController
 {
+    private static final Logger logger = LoggerFactory.getLogger(DogController.class);
+    
     // localhost:8080/dogs/dogs
     @GetMapping(value = "/dogs", produces = {"application/json"})
     public ResponseEntity<?> getAllDogs()
     {
+        logger.info("/dogs has been accessed");
         return new ResponseEntity<>(ProjectrestdogsApplication.ourDogList.dogList, HttpStatus.OK);
     }
 
@@ -27,6 +32,7 @@ public class DogController
     @GetMapping(value = "/{id}", produces = {"application/json"})
     public ResponseEntity<?> getDogDetail(@PathVariable long id)
     {
+        logger.info("/dogs/" + id + " has been accessed");
         Dog rtnDog;
         if(ProjectrestdogsApplication.ourDogList.findDog(d -> (d.getId() == id)) == null)
         {
@@ -42,6 +48,7 @@ public class DogController
     @GetMapping(value = "/breeds/{breed}", produces = {"application/json"})
     public ResponseEntity<?> getDogBreeds (@PathVariable String breed)
     {
+        logger.info("/dogs/breeds/" + breed + " has been accessed");
         ArrayList<Dog> rtnDogs = ProjectrestdogsApplication.ourDogList.
                 findDogs(d -> d.getBreed().toUpperCase().equals(breed.toUpperCase()));
         if(rtnDogs.size() == 0)
