@@ -2,16 +2,16 @@ package com.lambdaschool.projectrestdogs.models;
 
 import java.io.Serializable;
 
-public class MessageDetail implements Serializable
+public class EndpointMessage implements Serializable
 {
     private String endPoint;
     
-    public MessageDetail()
+    public EndpointMessage()
     {
     
     }
     
-    public MessageDetail(String endPoint)
+    public EndpointMessage(String endPoint)
     {
         this.endPoint = endPoint;
     }

@@ -2,11 +2,15 @@ package com.lambdaschool.projectrestdogs.models;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.concurrent.atomic.AtomicLong;
 
 public class Dog
 {
+    @Autowired
+    NewDogMessage dogMsg;
+    
     private static final Logger logger = LoggerFactory.getLogger(Dog.class);
     private static final AtomicLong counter = new AtomicLong();
     private long id;
@@ -16,6 +20,7 @@ public class Dog
 
     public Dog(String breed, int weight, boolean apartmentSuitable)
     {
+        
         this.id = counter.incrementAndGet();
         this.breed = breed;
         this.weight = weight;
@@ -63,5 +68,16 @@ public class Dog
     public void setApartmentSuitable(boolean apartmentSuitable)
     {
         this.apartmentSuitable = apartmentSuitable;
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "Dog{" +
+                "id=" + id +
+                ", breed='" + breed + '\'' +
+                ", weight=" + weight +
+                ", apartmentSuitable=" + apartmentSuitable +
+                '}';
     }
 }

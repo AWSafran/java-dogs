@@ -3,8 +3,13 @@ package com.lambdaschool.projectrestdogs.controller;
 import com.lambdaschool.projectrestdogs.exception.ResourceNotFoundException;
 import com.lambdaschool.projectrestdogs.models.Dog;
 import com.lambdaschool.projectrestdogs.ProjectrestdogsApplication;
+import com.lambdaschool.projectrestdogs.models.EndpointMessage;
+import com.lambdaschool.projectrestdogs.models.ErrorDetail;
+import com.lambdaschool.projectrestdogs.services.MessageSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,19 +17,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.websocket.Endpoint;
 import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/dogs")
 public class DogController
 {
+    @Autowired
+    MessageSender msgSender;
+    
     private static final Logger logger = LoggerFactory.getLogger(DogController.class);
     
     // localhost:8080/dogs/dogs
     @GetMapping(value = "/dogs", produces = {"application/json"})
     public ResponseEntity<?> getAllDogs()
     {
-        logger.info("/dogs has been accessed");
+        msgSender.sendEndpointMessage("/dogs/dogs");
+        logger.info("/dogs/dogs has been accessed");
         return new ResponseEntity<>(ProjectrestdogsApplication.ourDogList.dogList, HttpStatus.OK);
     }
 
@@ -32,6 +42,7 @@ public class DogController
     @GetMapping(value = "/{id}", produces = {"application/json"})
     public ResponseEntity<?> getDogDetail(@PathVariable long id)
     {
+        msgSender.sendEndpointMessage("/dogs/" + id);
         logger.info("/dogs/" + id + " has been accessed");
         Dog rtnDog;
         if(ProjectrestdogsApplication.ourDogList.findDog(d -> (d.getId() == id)) == null)
@@ -48,6 +59,7 @@ public class DogController
     @GetMapping(value = "/breeds/{breed}", produces = {"application/json"})
     public ResponseEntity<?> getDogBreeds (@PathVariable String breed)
     {
+        msgSender.sendEndpointMessage("/dogs/breeds/" + breed);
         logger.info("/dogs/breeds/" + breed + " has been accessed");
         ArrayList<Dog> rtnDogs = ProjectrestdogsApplication.ourDogList.
                 findDogs(d -> d.getBreed().toUpperCase().equals(breed.toUpperCase()));
