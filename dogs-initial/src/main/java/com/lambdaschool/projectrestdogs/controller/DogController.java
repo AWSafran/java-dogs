@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.websocket.Endpoint;
 import java.util.ArrayList;
@@ -84,5 +85,16 @@ public class DogController
         {
             return new ResponseEntity<>(rtnDogs, HttpStatus.OK);
         }
+    }
+    
+    //localhost:2020/dogs/table
+    @GetMapping(value="/table")
+    public ModelAndView displayDogTable()
+    {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("dogs");
+        mav.addObject("dogList", ProjectrestdogsApplication.ourDogList.dogList);
+        
+        return mav;
     }
 }
