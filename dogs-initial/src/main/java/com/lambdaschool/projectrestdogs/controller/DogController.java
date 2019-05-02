@@ -44,12 +44,12 @@ public class DogController
     {
         //Messages for all dogs created here, will loop through existing dogs initially
     
-        for(Dog d : ProjectrestdogsApplication.ourDogList.dogList)
-        {
-            msgSender.sendNewDogMessage(d);
-        }
+//        for(Dog d : ProjectrestdogsApplication.ourDogList.dogList)
+//        {
+//            msgSender.sendNewDogMessage(d);
+//        }
         System.out.println("Made it to get mapping");
-        msgSender.sendEndpointMessage("/dogs/dogs");
+        //msgSender.sendEndpointMessage("/dogs/dogs");
         logger.info("/dogs/dogs has been accessed");
         return new ResponseEntity<>(ProjectrestdogsApplication.ourDogList.dogList, HttpStatus.OK);
     }
@@ -58,7 +58,7 @@ public class DogController
     @GetMapping(value = "/{id}", produces = {"application/json"})
     public ResponseEntity<?> getDogDetail(@PathVariable long id)
     {
-        msgSender.sendEndpointMessage("/dogs/" + id);
+        //msgSender.sendEndpointMessage("/dogs/" + id);
         logger.info("/dogs/" + id + " has been accessed");
         Dog rtnDog;
         if(ProjectrestdogsApplication.ourDogList.findDog(d -> (d.getId() == id)) == null)
@@ -75,7 +75,7 @@ public class DogController
     @GetMapping(value = "/breeds/{breed}", produces = {"application/json"})
     public ResponseEntity<?> getDogBreeds (@PathVariable String breed)
     {
-        msgSender.sendEndpointMessage("/dogs/breeds/" + breed);
+        //msgSender.sendEndpointMessage("/dogs/breeds/" + breed);
         logger.info("/dogs/breeds/" + breed + " has been accessed");
         ArrayList<Dog> rtnDogs = ProjectrestdogsApplication.ourDogList.
                 findDogs(d -> d.getBreed().toUpperCase().equals(breed.toUpperCase()));
