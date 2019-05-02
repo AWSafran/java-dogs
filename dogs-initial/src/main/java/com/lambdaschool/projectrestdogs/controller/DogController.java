@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.websocket.Endpoint;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 @RestController
@@ -94,6 +95,19 @@ public class DogController
         ModelAndView mav = new ModelAndView();
         mav.setViewName("dogs");
         mav.addObject("dogList", ProjectrestdogsApplication.ourDogList.dogList);
+        
+        return mav;
+    }
+    
+    @GetMapping(value="/apartment")
+    public ModelAndView displayApartmentDogs()
+    {
+        ArrayList<Dog> apartmentDogs = new ArrayList<>();
+        
+        apartmentDogs = ProjectrestdogsApplication.ourDogList.findDogs(d -> d.isApartmentSuitable());
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("dogs");
+        mav.addObject("dogList", apartmentDogs);
         
         return mav;
     }
