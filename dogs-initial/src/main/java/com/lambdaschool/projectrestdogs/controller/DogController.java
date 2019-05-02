@@ -33,12 +33,19 @@ public class DogController
     public DogController(RabbitTemplate rt)
     {
         this.rt = rt;
+
     }
     
     // localhost:8080/dogs/dogs
     @GetMapping(value = "/dogs", produces = {"application/json"})
     public ResponseEntity<?> getAllDogs()
     {
+        //Messages for all dogs created here, will loop through existing dogs initially
+    
+        for(Dog d : ProjectrestdogsApplication.ourDogList.dogList)
+        {
+            msgSender.sendNewDogMessage(d);
+        }
         System.out.println("Made it to get mapping");
         msgSender.sendEndpointMessage("/dogs/dogs");
         logger.info("/dogs/dogs has been accessed");
