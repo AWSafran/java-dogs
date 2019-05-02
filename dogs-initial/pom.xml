@@ -66,9 +66,9 @@
             <plugin>
                 <groupId>com.heroku.sdk</groupId>
                 <artifactId>heroku-maven-plugin</artifactId>
-                <version>2.0.7</version>
+                <version>2.0.3</version>
                 <configuration>
-                    <appName>awsafran-dogs</appName>
+                    <appName>awsafran-dogs2</appName>
                     <includeTarget>false</includeTarget>
                     <includes>
                         <!--   For windows      <include>${project.build.directory}\${project.build.finalName}.jar</include>-->
