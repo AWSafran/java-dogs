@@ -28,11 +28,18 @@ public class DogController
     MessageSender msgSender;
     
     private static final Logger logger = LoggerFactory.getLogger(DogController.class);
+    private final RabbitTemplate rt;
+    
+    public DogController(RabbitTemplate rt)
+    {
+        this.rt = rt;
+    }
     
     // localhost:8080/dogs/dogs
     @GetMapping(value = "/dogs", produces = {"application/json"})
     public ResponseEntity<?> getAllDogs()
     {
+        System.out.println("Made it to get mapping");
         msgSender.sendEndpointMessage("/dogs/dogs");
         logger.info("/dogs/dogs has been accessed");
         return new ResponseEntity<>(ProjectrestdogsApplication.ourDogList.dogList, HttpStatus.OK);
